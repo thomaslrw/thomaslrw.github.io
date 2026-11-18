@@ -183,7 +183,7 @@
     { name: "UserClimb", line: "Makes your AI write like a human marketer", url: "https://userclimb.com", icon: "img/userclimb.png", tag: "claude" },
   ];
   const LINKS = [
-    { label: "free-video: build your first app", url: "https://userclimb.com/build" },
+    { label: "email me: thomaslrw2004@gmail.com", url: "mailto:thomaslrw2004@gmail.com" },
     { label: "github.com/thomaslrw", url: "https://github.com/thomaslrw" },
   ];
   const EMAIL = "thomaslrw2004@gmail.com";
@@ -209,7 +209,7 @@
     try { await navigator.clipboard.writeText(EMAIL); e.target.textContent = "copied"; setTimeout(() => (e.target.textContent = "copy"), 1500); }
     catch { location.href = `mailto:${EMAIL}`; }
   };
-  for (const l of LINKS) document.getElementById("links").append(el(`<a class="link" href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`));
+  for (const l of LINKS) document.getElementById("links").append(el(`<a class="link" href="${l.url}"${l.url.startsWith("mailto:") ? "" : ' target="_blank" rel="noopener"'}>${esc(l.label)}</a>`));
 
   // Never scroll: if the window is taller or wider than the screen (small phones, in-app browsers), shrink it to fit.
   const fit = document.getElementById("fit");
