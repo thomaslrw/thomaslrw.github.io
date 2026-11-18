@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thomas: things I've built</title>
+<meta name="description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thomaslrw.github.io/">
+<meta property="og:title" content="Thomas: things I've built">
+<meta property="og:description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built.">
+<meta property="og:image" content="https://thomaslrw.github.io/img/codewidget-preview.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="img/codewidget.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<style>
+  /* One page, black and white, like CodeWidget. To add or change a link, edit BUILT and LINKS at the bottom. */
+  :root { --bg: #000; --text: #f2f2f2; --sub: #8f8f8f; --line: #1c1c1c; --card: #0a0a0a; }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg); color: var(--text); min-height: 100vh;
+    font: 15px/1.5 Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  main { max-width: 560px; margin: 0 auto; padding: 56px 16px 40px; }
+
+  .me { text-align: center; }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 50%; margin: 0 auto;
+    display: grid; place-items: center; font-size: 34px; font-weight: 700;
+    background: #111; border: 1px solid #262626;
+  }
+  h1 { margin-top: 16px; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .handle { color: var(--sub); font-size: 14px; margin-top: 2px; }
+  .bio { margin-top: 12px; color: #cfcfcf; }
+  .socials { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+  .socials a {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    border: 1px solid #262626; color: #d6d6d6; transition: border-color .15s, color .15s;
+  }
+  .socials a:hover { border-color: #555; color: #fff; }
+  .socials svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  h2 { margin: 44px 0 14px; font-size: 13px; font-weight: 500; color: var(--sub); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  .build { display: block; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--card); transition: border-color .15s, transform .15s; }
+  .build + .build { margin-top: 14px; }
+  .build:hover { border-color: #3a3a3a; transform: translateY(-1px); }
+  .shot { display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; border-bottom: 1px solid var(--line); background: #050505; }
+  .info { display: flex; gap: 12px; align-items: center; padding: 14px 16px 16px; }
+  .info img { width: 44px; height: 44px; border-radius: 11px; flex: none; }
+  .info b { display: block; font-size: 16px; font-weight: 600; }
+  .info span { display: block; color: var(--sub); font-size: 13.5px; line-height: 1.4; margin-top: 1px; }
+  .tag { font-style: normal; margin-left: auto; flex: none; font-size: 12px; color: #d6d6d6; border: 1px solid #2a2a2a; border-radius: 999px; padding: 4px 10px; }
+
+  .links { display: grid; gap: 10px; }
+  .link {
+    display: flex; align-items: center; justify-content: center; position: relative;
+    min-height: 54px; padding: 12px 44px; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--card); font-weight: 500; text-align: center; transition: border-color .15s, background .15s;
+  }
+  .link:hover { border-color: #3a3a3a; background: #101010; }
+  .link::after { content: "↗"; position: absolute; right: 18px; color: #6b6b6b; }
+
+  footer { margin-top: 48px; text-align: center; color: #5c5c5c; font-size: 12.5px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="me">
+    <div class="avatar" aria-hidden="true">T</div>
+    <h1>Thomas</h1>
+    <p class="handle">@toms.gpt</p>
+    <p class="bio">Keeping up with AI and tech chaos, one video at a time. Here's what I've built, all free.</p>
+    <nav class="socials" id="socials" aria-label="Socials"></nav>
+  </section>
+
+  <h2>Things I've built</h2>
+  <div id="built"></div>
+
+  <h2>Links</h2>
+  <div class="links" id="links"></div>
+
+  <footer>Made by Thomas</footer>
+</main>
+
+<script>
+  // Edit these lists to change the page. Newest first.
+  const BUILT = [
+    {
+      name: "CodeWidget",
+      line: "Paste code from any AI and pin it to your desktop as a widget.",
+      url: "https://thomaslrw.github.io/CodeWidget/",
+      icon: "img/codewidget.png",
+      shot: "img/codewidget-preview.jpg",
+      tag: "Free app",
+    },
+    {
+      name: "UserClimb",
+      line: "Makes your AI write hooks, scripts and post ideas like a human marketer.",
+      url: "https://userclimb.com",
+      icon: "img/userclimb.png",
+      shot: "img/userclimb-preview.jpg",
+      tag: "Free for Claude",
+    },
+  ];
+
+  const LINKS = [
+    { label: "Get CodeWidget for your desktop", url: "https://thomaslrw.github.io/CodeWidget/#download" },
+    { label: "Add UserClimb to Claude", url: "https://userclimb.com/#connect" },
+    { label: "Free video: build your first app", url: "https://userclimb.com/build" },
+    { label: "My code on GitHub", url: "https://github.com/thomaslrw" },
+  ];
+
+  const SOCIALS = [
+    {
+      label: "Instagram",
+      url: "https://www.instagram.com/toms.gpt/",
+      svg: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>',
+    },
+    {
+      label: "GitHub",
+      url: "https://github.com/thomaslrw",
+      svg: '<path d="M9 19c-4 1.4-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
+    },
+  ];
+
+  const el = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; };
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  for (const s of SOCIALS) {
+    document.getElementById("socials").append(el(
+      `<a href="${s.url}" target="_blank" rel="noopener me" aria-label="${esc(s.label)}" title="${esc(s.label)}"><svg viewBox="0 0 24 24">${s.svg}</svg></a>`));
+  }
+  for (const b of BUILT) {
+    document.getElementById("built").append(el(
+      `<a class="build" href="${b.url}" target="_blank" rel="noopener">
+        <img class="shot" src="${b.shot}" alt="${esc(b.name)}" loading="lazy">
+        <div class="info"><img src="${b.icon}" alt=""><div><b>${esc(b.name)}</b><span>${esc(b.line)}</span></div><em class="tag">${esc(b.tag)}</em></div>
+      </a>`));
+  }
+  for (const l of LINKS) {
+    document.getElementById("links").append(el(`<a class="link" href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`));
+  }
+</script>
+</body>
+</html>
