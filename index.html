@@ -4,149 +4,187 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Thomas: things I've built</title>
-<meta name="description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built.">
+<meta name="description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built for fun.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thomaslrw.github.io/">
 <meta property="og:title" content="Thomas: things I've built">
-<meta property="og:description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built.">
-<meta property="og:image" content="https://thomaslrw.github.io/img/codewidget-preview.jpg">
+<meta property="og:description" content="Keeping up with AI and tech chaos, one video at a time. Free, open source tools I've built for fun.">
+<meta property="og:image" content="https://thomaslrw.github.io/img/thomas.jpg">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="img/codewidget.png">
+<link rel="icon" href="img/thomas.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-  /* One page, black and white, like CodeWidget. To add or change a link, edit BUILT and LINKS at the bottom. */
-  :root { --bg: #000; --text: #f2f2f2; --sub: #8f8f8f; --line: #1c1c1c; --card: #0a0a0a; }
+  /* One screen, no scrolling, on phone and desktop. Black, white and grey with a little terminal flavour.
+     To change projects or links, edit BUILT, LINKS and SOCIALS at the bottom. */
+  :root {
+    --bg: #000; --text: #f2f2f2; --sub: #8a8a8a; --dim: #4d4d4d; --line: #1a1a1a; --panel: #070707;
+    --green: #7ee08a; --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
   * { box-sizing: border-box; margin: 0; }
-  html { -webkit-text-size-adjust: 100%; }
+  html, body { height: 100%; }
   body {
-    background: var(--bg); color: var(--text); min-height: 100vh;
-    font: 15px/1.5 Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--text); overflow: hidden;
+    font: 15px/1.45 Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;
+  }
+  /* Faint grid, fading out towards the edges. */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background-image: linear-gradient(#ffffff09 1px, transparent 1px), linear-gradient(90deg, #ffffff09 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%);
   }
   a { color: inherit; text-decoration: none; }
-  main { max-width: 560px; margin: 0 auto; padding: 56px 16px 40px; }
+  .stage { position: relative; height: 100%; padding: 0 16px; }
+  .fit { width: 100%; max-width: 980px; margin: 0 auto; transform-origin: top center; }
 
-  .me { text-align: center; }
-  .avatar {
-    width: 84px; height: 84px; border-radius: 50%; margin: 0 auto;
-    display: grid; place-items: center; font-size: 34px; font-weight: 700;
-    background: #111; border: 1px solid #262626;
-  }
-  h1 { margin-top: 16px; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
-  .handle { color: var(--sub); font-size: 14px; margin-top: 2px; }
-  .bio { margin-top: 12px; color: #cfcfcf; }
-  .socials { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
-  .socials a {
-    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
-    border: 1px solid #262626; color: #d6d6d6; transition: border-color .15s, color .15s;
-  }
+  /* The window */
+  .win { border: 1px solid #222; border-radius: 16px; background: #030303ee; overflow: hidden; box-shadow: 0 30px 80px -30px #000; }
+  .bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--sub); }
+  .bar i { width: 10px; height: 10px; border-radius: 50%; background: #2a2a2a; }
+  .bar span { margin-left: 8px; }
+  .bar .live { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+  .bar .live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+
+  .grid { display: grid; grid-template-columns: 1fr 1.15fr; }
+  .pane { padding: 24px 26px; }
+  .pane + .pane { border-left: 1px solid var(--line); }
+
+  /* Me */
+  .me { display: flex; align-items: center; gap: 16px; }
+  .me img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; border: 1px solid #2a2a2a; flex: none; }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .handle { font: 13px var(--mono); color: var(--sub); margin-top: 3px; }
+  .socials { display: flex; gap: 8px; margin-top: 10px; }
+  .socials a { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; border: 1px solid #262626; color: #cfcfcf; transition: border-color .15s, color .15s; }
   .socials a:hover { border-color: #555; color: #fff; }
-  .socials svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .socials svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-  h2 { margin: 44px 0 14px; font-size: 13px; font-weight: 500; color: var(--sub); text-transform: uppercase; letter-spacing: 0.12em; }
+  .term { margin-top: 22px; font: 13px/1.65 var(--mono); }
+  .p { color: var(--dim); }
+  .p b { color: var(--green); font-weight: 500; }
+  .out { color: #d9d9d9; margin: 2px 0 12px; font-family: Geist, sans-serif; font-size: 14.5px; line-height: 1.5; }
+  .out em { font-style: normal; color: #fff; }
+  .out.mono { font-family: var(--mono); font-size: 13px; color: #bdbdbd; }
+  .cursor { display: inline-block; width: 8px; height: 15px; background: #d9d9d9; vertical-align: -2px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
 
-  .build { display: block; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--card); transition: border-color .15s, transform .15s; }
-  .build + .build { margin-top: 14px; }
-  .build:hover { border-color: #3a3a3a; transform: translateY(-1px); }
-  .shot { display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; border-bottom: 1px solid var(--line); background: #050505; }
-  .info { display: flex; gap: 12px; align-items: center; padding: 14px 16px 16px; }
-  .info img { width: 44px; height: 44px; border-radius: 11px; flex: none; }
-  .info b { display: block; font-size: 16px; font-weight: 600; }
-  .info span { display: block; color: var(--sub); font-size: 13.5px; line-height: 1.4; margin-top: 1px; }
-  .tag { font-style: normal; margin-left: auto; flex: none; font-size: 12px; color: #d6d6d6; border: 1px solid #2a2a2a; border-radius: 999px; padding: 4px 10px; }
+  /* Built */
+  .label { font: 12px var(--mono); color: var(--sub); margin-bottom: 10px; }
+  .label b { color: var(--green); font-weight: 500; }
+  .label.next { margin-top: 22px; }
+  .build { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); transition: border-color .15s, background .15s; }
+  .build + .build { margin-top: 8px; }
+  .build:hover { border-color: #333; background: #0c0c0c; }
+  .build img { width: 40px; height: 40px; border-radius: 10px; flex: none; }
+  .build b { display: block; font-size: 15px; font-weight: 600; }
+  .build span { display: block; color: var(--sub); font-size: 13px; line-height: 1.35; }
+  .build code { margin-left: auto; flex: none; font: 11px var(--mono); color: #bdbdbd; border: 1px solid #262626; border-radius: 6px; padding: 3px 7px; }
 
-  .links { display: grid; gap: 10px; }
-  .link {
-    display: flex; align-items: center; justify-content: center; position: relative;
-    min-height: 54px; padding: 12px 44px; border-radius: 16px; border: 1px solid var(--line);
-    background: var(--card); font-weight: 500; text-align: center; transition: border-color .15s, background .15s;
+  .links { display: grid; gap: 8px; }
+  .link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font: 13px var(--mono); color: #d9d9d9; transition: border-color .15s, color .15s; }
+  .link:hover { border-color: #333; color: #fff; }
+  .link::before { content: ">"; color: var(--green); }
+  .link::after { content: "↗"; margin-left: auto; color: var(--dim); font-family: Geist, sans-serif; }
+
+  .foot { padding: 9px 14px; border-top: 1px solid var(--line); font: 11.5px var(--mono); color: var(--dim); display: flex; justify-content: space-between; }
+
+  /* Phone: one column, tighter. */
+  @media (max-width: 760px) {
+    .stage { padding: 0 10px; }
+    .grid { grid-template-columns: 1fr; }
+    .pane { padding: 16px 16px; }
+    .pane + .pane { border-left: 0; border-top: 1px solid var(--line); }
+    .me img { width: 62px; height: 62px; }
+    h1 { font-size: 20px; }
+    .socials { margin-top: 7px; }
+    .term { margin-top: 14px; font-size: 12px; }
+    .out { font-size: 14px; margin-bottom: 8px; }
+    .out:last-of-type { margin-bottom: 0; }
+    .stack { display: none; }
+    .label.next { margin-top: 16px; }
+    .build { padding: 9px 10px; }
+    .build img { width: 36px; height: 36px; }
+    .link { padding: 9px 11px; }
+    .bar { padding: 9px 12px; }
   }
-  .link:hover { border-color: #3a3a3a; background: #101010; }
-  .link::after { content: "↗"; position: absolute; right: 18px; color: #6b6b6b; }
-
-  footer { margin-top: 48px; text-align: center; color: #5c5c5c; font-size: 12.5px; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .cursor, .bar .live::before { animation: none; } * { transition: none !important; } }
 </style>
 </head>
 <body>
-<main>
-  <section class="me">
-    <div class="avatar" aria-hidden="true">T</div>
-    <h1>Thomas</h1>
-    <p class="handle">@toms.gpt</p>
-    <p class="bio">Keeping up with AI and tech chaos, one video at a time. Here's what I've built, all free.</p>
-    <nav class="socials" id="socials" aria-label="Socials"></nav>
-  </section>
-
-  <h2>Things I've built</h2>
-  <div id="built"></div>
-
-  <h2>Links</h2>
-  <div class="links" id="links"></div>
-
-  <footer>Made by Thomas</footer>
-</main>
+<div class="stage">
+  <div class="fit" id="fit">
+    <div class="win">
+      <div class="bar"><i></i><i></i><i></i><span>~/thomas</span><span class="live">building</span></div>
+      <div class="grid">
+        <section class="pane">
+          <div class="me">
+            <img src="img/thomas.jpg" alt="Thomas" width="76" height="76">
+            <div>
+              <h1>Thomas</h1>
+              <div class="handle">@toms.gpt</div>
+              <nav class="socials" id="socials" aria-label="Socials"></nav>
+            </div>
+          </div>
+          <div class="term">
+            <div class="p"><b>$</b> whoami</div>
+            <p class="out">Keeping up with <em>AI &amp; tech chaos</em>, one video at a time.</p>
+            <div class="p"><b>$</b> cat now.txt</div>
+            <p class="out">Building free, open source tools for fun and sharing what I learn along the way.</p>
+            <div class="p stack"><b>$</b> ls ~/stack</div>
+            <p class="out stack mono">claude&nbsp;&nbsp;lovable&nbsp;&nbsp;github <span class="cursor" aria-hidden="true"></span></p>
+          </div>
+        </section>
+        <section class="pane">
+          <div class="label"><b>~/built</b> // made these for fun, all open source + free</div>
+          <div id="built"></div>
+          <div class="label next"><b>~/links</b></div>
+          <div class="links" id="links"></div>
+        </section>
+      </div>
+      <div class="foot"><span>thomaslrw.github.io</span><span>MIT · free forever</span></div>
+    </div>
+  </div>
+</div>
 
 <script>
-  // Edit these lists to change the page. Newest first.
+  // Edit these lists to change the page.
   const BUILT = [
-    {
-      name: "CodeWidget",
-      line: "Paste code from any AI and pin it to your desktop as a widget.",
-      url: "https://thomaslrw.github.io/CodeWidget/",
-      icon: "img/codewidget.png",
-      shot: "img/codewidget-preview.jpg",
-      tag: "Free app",
-    },
-    {
-      name: "UserClimb",
-      line: "Makes your AI write hooks, scripts and post ideas like a human marketer.",
-      url: "https://userclimb.com",
-      icon: "img/userclimb.png",
-      shot: "img/userclimb-preview.jpg",
-      tag: "Free for Claude",
-    },
+    { name: "CodeWidget", line: "Paste code from any AI, pin it to your desktop", url: "https://thomaslrw.github.io/CodeWidget/", icon: "img/codewidget.png", tag: "app" },
+    { name: "UserClimb", line: "Makes your AI write like a human marketer", url: "https://userclimb.com", icon: "img/userclimb.png", tag: "claude" },
   ];
-
   const LINKS = [
-    { label: "Get CodeWidget for your desktop", url: "https://thomaslrw.github.io/CodeWidget/#download" },
-    { label: "Add UserClimb to Claude", url: "https://userclimb.com/#connect" },
-    { label: "Free video: build your first app", url: "https://userclimb.com/build" },
-    { label: "My code on GitHub", url: "https://github.com/thomaslrw" },
+    { label: "free-video: build your first app", url: "https://userclimb.com/build" },
+    { label: "github.com/thomaslrw", url: "https://github.com/thomaslrw" },
   ];
-
   const SOCIALS = [
-    {
-      label: "Instagram",
-      url: "https://www.instagram.com/toms.gpt/",
-      svg: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>',
-    },
-    {
-      label: "GitHub",
-      url: "https://github.com/thomaslrw",
-      svg: '<path d="M9 19c-4 1.4-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
-    },
+    { label: "Instagram", url: "https://www.instagram.com/toms.gpt/", svg: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>' },
+    { label: "GitHub", url: "https://github.com/thomaslrw", svg: '<path d="M9 19c-4 1.4-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>' },
   ];
 
   const el = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; };
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  for (const s of SOCIALS) document.getElementById("socials").append(el(`<a href="${s.url}" target="_blank" rel="noopener me" aria-label="${esc(s.label)}" title="${esc(s.label)}"><svg viewBox="0 0 24 24">${s.svg}</svg></a>`));
+  for (const b of BUILT) document.getElementById("built").append(el(`<a class="build" href="${b.url}" target="_blank" rel="noopener"><img src="${b.icon}" alt=""><div><b>${esc(b.name)}</b><span>${esc(b.line)}</span></div><code>${esc(b.tag)}</code></a>`));
+  for (const l of LINKS) document.getElementById("links").append(el(`<a class="link" href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`));
 
-  for (const s of SOCIALS) {
-    document.getElementById("socials").append(el(
-      `<a href="${s.url}" target="_blank" rel="noopener me" aria-label="${esc(s.label)}" title="${esc(s.label)}"><svg viewBox="0 0 24 24">${s.svg}</svg></a>`));
+  // Never scroll: if the window is taller or wider than the screen (small phones, in-app browsers), shrink it to fit.
+  const fit = document.getElementById("fit");
+  function size() {
+    fit.style.transform = "none";
+    const pad = 20;
+    const h = fit.offsetHeight;
+    const s = Math.min(1, (innerHeight - pad) / h);
+    fit.style.transform = s < 1 ? `scale(${s})` : "none";
+    fit.style.marginTop = `${Math.max(pad / 2, (innerHeight - h * s) / 2)}px`;
   }
-  for (const b of BUILT) {
-    document.getElementById("built").append(el(
-      `<a class="build" href="${b.url}" target="_blank" rel="noopener">
-        <img class="shot" src="${b.shot}" alt="${esc(b.name)}" loading="lazy">
-        <div class="info"><img src="${b.icon}" alt=""><div><b>${esc(b.name)}</b><span>${esc(b.line)}</span></div><em class="tag">${esc(b.tag)}</em></div>
-      </a>`));
-  }
-  for (const l of LINKS) {
-    document.getElementById("links").append(el(`<a class="link" href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`));
-  }
+  addEventListener("resize", size);
+  document.fonts?.ready.then(size);
+  size();
 </script>
 </body>
 </html>
